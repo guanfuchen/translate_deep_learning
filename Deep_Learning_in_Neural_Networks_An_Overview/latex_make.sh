@@ -1,4 +1,4 @@
-# xelatex *.tex
+pdflatex *.tex
 bibtex *.aux
-# xelatex *.tex
-# xelatex *.tex
+pdflatex *.tex
+pdflatex *.tex

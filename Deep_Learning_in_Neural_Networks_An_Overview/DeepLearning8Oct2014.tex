@@ -1,9 +1,10 @@
 % !TEX encoding = UTF-8 Unicode
 % -*- coding: UTF-8; -*-
 % vim: set fenc=utf-8
-%\pdfoutput=1
+\pdfoutput=1
 \documentclass[letterpaper]{article}
-\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
 \usepackage{times}
 \usepackage{graphicx}
 \usepackage{breakcites}
@@ -20,6 +21,7 @@
 \makeatother
 \newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
 \begin{document}
+\begin{CJK*}{UTF8}{gbsn}
 
 \title{Deep Learning in  Neural Networks: An Overview  \\
 {\small Technical Report IDSIA-03-14 / arXiv:1404.7828 v4 [cs.NE] (88 pages, 888 references)}}
@@ -35,6 +37,7 @@ Switzerland}
 
 
 \begin{abstract}
+中文
 In recent years, deep artificial neural networks (including recurrent ones) have won numerous contests in pattern recognition and machine learning.
 %triggering a {\em reNNaissance} (title of IJCNN 2011 keynote).
 This historical survey compactly summarises relevant work, much of it from the previous millennium. Shallow and deep learners are distinguished by the depth of their {\em credit assignment paths}, which are chains of possibly learnable, causal links between 
@@ -2536,6 +2539,7 @@ The contents of this paper may be used for educational and non-commercial purpos
 %\bibliographystyle{alpha}
 %\bibliographystyle{apalike}
 %\printauthorindex
+\end{CJK*}
 \end{document}
 
 
