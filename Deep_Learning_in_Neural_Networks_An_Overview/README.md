@@ -2,7 +2,12 @@
 
 | 章节 | 负责人 | 简单阅读 | 中英对比 |
 | ------------ | ------------ | ------------ | ------------ |
-| 第一章 | @guanfuchen | @guanfuchen | @guanfuchen |
+| Chapter1 | @guanfuchen | @guanfuchen | @guanfuchen |
+| Chapter2 | @guanfuchen | @guanfuchen | @guanfuchen |
+| Chapter3 | @guanfuchen | @guanfuchen | @guanfuchen |
+| Chapter4 | @guanfuchen | @guanfuchen | @guanfuchen |
+| Chapter5 | @guanfuchen | @guanfuchen | @guanfuchen |
+| Chapter6 | @guanfuchen | @guanfuchen | @guanfuchen |
 
 
 ---
