@@ -12,6 +12,14 @@
         <seg>介绍神经网络中的深度学习</seg>
       </tuv>
     </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Which modifiable components of a learning system are responsible for its success or failure?</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T131730Z" creationid="cgf" creationdate="20171201T131730Z">
+        <seg></seg>
+      </tuv>
+    </tu>
 <!-- Alternative translations -->
   </body>
 </tmx>
