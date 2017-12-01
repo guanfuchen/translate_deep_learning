@@ -14,6 +14,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>There are general credit assignment methods for {&lt;u1&gt; universal problem solvers} that are time-optimal in various theoretical senses</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132947Z" creationid="cgf" creationdate="20171201T132842Z">
+        <seg>有通用的credit assignment methods来处理{&lt;u1&gt; universal problem solvers}，这些方法在各种理论意义上是时间最优的</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This has been called the {&lt;u0&gt; fundamental credit assignment problem} &lt;u2&gt;{Minsky:63}.</seg>
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132620Z" creationid="cgf" creationdate="20171201T132620Z">
