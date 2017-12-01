@@ -14,6 +14,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This has been called the {&lt;u0&gt; fundamental credit assignment problem} &lt;u2&gt;{Minsky:63}.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132620Z" creationid="cgf" creationdate="20171201T132620Z">
+        <seg>这被称为 {&lt;u0&gt; fundamental credit assignment problem} &lt;u2&gt;{Minsky:63}.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>What changes to them improve performance?</seg>
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132347Z" creationid="cgf" creationdate="20171201T132347Z">
