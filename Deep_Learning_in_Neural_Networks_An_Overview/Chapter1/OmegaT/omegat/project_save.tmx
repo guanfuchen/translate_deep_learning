@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx11.dtd">
+<tmx version="1.1">
+  <header creationtool="OmegaT" o-tmf="OmegaT TMX" adminlang="EN-US" datatype="plaintext" creationtoolversion="OmegaT-3.6.0" segtype="sentence" srclang="EN-US"/>
+  <body>
+<!-- Default translations -->
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Introduction to Deep Learning (DL) in Neural Networks (NNs)</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T131540Z" creationid="cgf" creationdate="20171201T131540Z">
+        <seg>介绍神经网络中的深度学习</seg>
+      </tuv>
+    </tu>
+<!-- Alternative translations -->
+  </body>
+</tmx>
