@@ -38,6 +38,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>DL became practically feasible to some extent through the help of {&lt;u6&gt; Unsupervised Learning} (UL), e.g., Sec. &lt;n6&gt; (1991), Sec. &lt;n7&gt; (2006).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T060126Z" creationid="cgf" creationdate="20171202T060126Z">
+        <seg>DL通过{&lt;u6&gt; 非监督学习} (UL), 例如, Sec. &lt;n6&gt; (1991), Sec. &lt;n7&gt; (2006)在某一程度上变得切实可行。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Deep Learning is about accurately assigning credit across {&lt;u3&gt; many} such stages.</seg>
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052723Z" creationid="cgf" creationdate="20171202T052721Z">
@@ -50,6 +58,22 @@
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052516Z" creationid="cgf" creationdate="20171202T052352Z">
         <seg>按照问题不同以及神经元如何连接，这种行为也许要求长期的随意计算情况 (Sec. &lt;n1&gt;), 在那里每一种情况都会转换 (经常是以非线性的方式)网络的激活。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In fact, since 2009, supervised deep NNs have won many official international pattern recognition competitions (e.g., Sec. &lt;n9&gt;, &lt;n10&gt;, &lt;n11&gt;, &lt;n12&gt;), achieving the first superhuman visual pattern recognition results in limited domains (Sec. &lt;n13&gt;, 2011).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T060651Z" creationid="cgf" creationdate="20171202T060617Z">
+        <seg>事实上，2009年以来，监督深度NNs已经在许多官方国际模式识别竞赛中获得了巨大的成功 (比如, Sec. &lt;n9&gt;, &lt;n10&gt;, &lt;n11&gt;, &lt;n12&gt;), 实现了第一个在有限的领域超越人类视觉模式识别结果 (Sec. &lt;n13&gt;, 2011)。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In the new millennium, deep NNs have finally attracted wide-spread attention, mainly by outperforming alternative machine learning methods such as kernel machines &lt;u8&gt;{Vapnik:95,advkernel} in numerous important applications.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T060436Z" creationid="cgf" creationdate="20171202T060436Z">
+        <seg>在接下来的几年中，深度学习终于吸引了广泛的关注，在许多不同的重要应用中都超过了可选的机器学习方法，比如基于kernel的方法&lt;u8&gt;{Vapnik:95,advkernel}。</seg>
       </tuv>
     </tu>
     <tu>
@@ -82,6 +106,14 @@
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052037Z" creationid="cgf" creationdate="20171202T052037Z">
         <seg>有一些神经元也许会通过触发动作影响环境。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The 1990s and 2000s also saw many improvements of purely supervised DL (Sec. &lt;n8&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T060227Z" creationid="cgf" creationdate="20171202T060227Z">
+        <seg>1990年和2000年在纯监督DL中(Sec. &lt;n8&gt;)见证了许多性能的提升。</seg>
       </tuv>
     </tu>
     <tu>
