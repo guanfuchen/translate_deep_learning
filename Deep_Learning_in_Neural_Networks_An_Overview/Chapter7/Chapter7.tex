@@ -1,0 +1,119 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{Conclusion and Outlook}
+\label{outlook}
+
+{\em Deep Learning} (DL) in 
+{\em Neural Networks} (NNs)
+is relevant for
+{\em Supervised Learning} (SL) (Sec.~\ref{super}),
+{\em Unsupervised Learning} (UL) (Sec.~\ref{super}), and
+{\em Reinforcement Learning} (RL) (Sec.~\ref{deeprl}).
+By alleviating problems with deep {\em Credit Assignment Paths} (CAPs, Sec.~\ref{caps},~\ref{1991a}),
+UL (Sec.~\ref{ulnn}) can not only facilitate 
+SL of sequences  
+(Sec.~\ref{1991b}) and 
+stationary patterns
+(Sec.~\ref{1987},~\ref{2006}), but also 
+RL (Sec.~\ref{unsrl},~\ref{ul}). 
+{\em Dynamic Programming} (DP, Sec.~\ref{dp}) is important for both 
+deep SL (Sec.~\ref{1970})
+and traditional RL with deep NNs (Sec.~\ref{trarl}).
+A search for solution-computing, 
+perturbation-resistant (Sec.~\ref{mdlnn},~\ref{2006},~\ref{tricks}),
+low-complexity  NNs 
+describable by few bits of information (Sec.~\ref{mdl}) can 
+reduce overfitting and 
+improve
+deep SL \& UL (Sec.~\ref{mdlnn},~\ref{ulnn}) as well as RL (Sec.~\ref{comrl}),
+also in the case of partially observable environments (Sec.~\ref{pomrl}). 
+Deep SL, UL, RL often create hierarchies of more and more abstract  
+representations of stationary data (Sec.~\ref{1965},~\ref{1987},~\ref{2006}),
+sequential data (Sec.~\ref{1991b}), or RL policies (Sec.~\ref{subrl}). 
+While UL can facilitate SL, pure SL for feedforward NNs (FNNs) (Sec.~\ref{1970},~\ref{1989},~\ref{2007},~\ref{2010})
+and recurrent NNs (RNNs) (Sec.~\ref{1970},~\ref{1997})
+did not only win early contests (Sec.~\ref{1994},~\ref{2003}) but also
+most of the recent ones   
+(Sec.~\ref{2009}--\ref{2013}).
+Especially DL in FNNs profited from 
+GPU implementations (Sec.~\ref{2007}--\ref{2011}).
+In particular, 
+GPU-based (Sec.~\ref{2011}) Max-Pooling (Sec.~\ref{1999}) Convolutional NNs (Sec.~\ref{1979},~\ref{1989},~\ref{2007})
+won competitions not only in pattern recognition (Sec.~\ref{2011}--\ref{2013}) 
+but also
+image segmentation (Sec.~\ref{2012})
+and object detection (Sec.~\ref{2012}, \ref{2013}).
+
+Unlike these systems, humans {\em learn to actively perceive} patterns by sequentially directing attention to relevant parts of the available data. Near future deep NNs will do so, too, extending previous work since 1990 on NNs that learn selective attention through RL of (a) {\em motor actions} such as saccade control (Sec.~\ref{worrl}) and (b)  {\em internal actions} controlling spotlights of attention within RNNs, thus closing the general sensorimotor loop through both external and internal feedback (e.g., Sec.~\ref{notation},~\ref{2012},~\ref{evorl},~\ref{comrl}).
+
+Many future deep NNs will also take into account that it costs energy
+to activate neurons, and to send signals between them. Brains seem to
+minimize such computational costs during problem solving in at least
+two ways: (1) At a given time, only a small fraction of all neurons is
+active because local competition through winner-take-all mechanisms
+shuts down many neighbouring neurons, and only winners can activate
+other neurons through outgoing connections (compare SLIM NNs;
+Sec.~\ref{tricks}). (2) Numerous neurons are sparsely connected in a
+compact 3D volume by many short-range and few long-range connections
+(much like microchips in traditional supercomputers). Often
+neighbouring neurons are allocated to solve a single task, thus
+reducing communication costs.  Physics seems to dictate that any
+efficient computational hardware will in the future also have to be
+brain-like in keeping with these two constraints. The most successful
+current deep RNNs, however, are not. Unlike certain spiking NNs
+(Sec.~\ref{spiking}), they usually activate all units at least slightly,
+and tend to be strongly connected, ignoring natural constraints of 3D
+hardware. It should be possible to improve them by adopting (1) and
+(2), and by minimizing non-differentiable energy and communication
+costs through direct search in program (weight) space (e.g.,
+Sec.~\ref{evorl},~\ref{comrl}).  These more brain-like RNNs will
+allocate neighboring RNN parts to related behaviors, and distant RNN
+parts to less related ones, thus self-modularizing in a way more
+general than that of traditional self-organizing maps in FNNs
+(Sec.~\ref{ulnn}). They will also implement Occam's razor
+(Sec.~\ref{mdl},~\ref{mdlnn}) as a by-product of energy minimization,
+by finding simple (highly generalizing) problem solutions that require
+few active neurons and few, mostly short connections.
+
+The more distant future may belong to general purpose learning
+algorithms that improve themselves in provably optimal ways
+(Sec.~\ref{unirl}), but these are not yet practical or commercially
+relevant.
+ 
+
+
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}

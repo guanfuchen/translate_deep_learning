@@ -1,0 +1,160 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{Depth of Credit Assignment Paths (CAPs) and of Problems}
+\label{caps}
+
+To measure whether credit assignment in a given 
+NN application is of the {\em deep} or {\em shallow} type,
+I introduce the concept of {\em Credit Assignment Paths} or CAPs,
+which are chains of possibly causal links between the events of Sec.~\ref{notation},
+e.g., from input through hidden to output layers in FNNs, or through 
+transformations over time in RNNs. 
+
+Let us first focus on SL.
+Consider two events 
+$x_p$ and $x_q$ $(1 \leq p < q \leq T)$.
+Depending on the application, they may have a
+{\em Potential Direct Causal Connection} (PDCC) expressed by the Boolean
+predicate $pdcc(p,q)$, which
+is true if and only if $p \in in_q$.
+Then the 2-element list $(p,q)$ is defined to be a CAP (a minimal one) from $p$ to $q$.
+A learning algorithm may be allowed to change  $w_{v(p,q)}$ to improve performance
+in future episodes.
+
+More general, possibly indirect,
+{\em Potential Causal Connections} (PCC) are expressed by the 
+recursively defined Boolean
+predicate $pcc(p,q)$, which in the SL case 
+is true only if $pdcc(p,q)$, or if
+$pcc(p,k)$ for some $k$ and $pdcc(k,q)$.
+In the latter case,
+appending $q$ to any CAP from $p$ to $k$ yields a CAP from $p$ to $q$
+ (this is a recursive definition, too).
+The set of such CAPs may be large but is finite. 
+Note that the {\em same} weight may affect {\em many} different PDCCs
+between successive events listed by a given CAP, 
+e.g., in the case of RNNs, or weight-sharing FNNs.
+
+Suppose a CAP has the form $(\ldots,k,t,\ldots,q)$, where
+$k$ and $t$ (possibly $t=q$) are the first successive elements 
+with {\em modifiable} $w_{v(k,t)}$. Then the 
+length of the suffix list $(t,\ldots, q)$ is called the CAP's {\em depth}
+(which is 0 if there are no modifiable links at all).
+This depth limits how far backwards credit assignment 
+can move down the causal chain 
+to find a modifiable 
+weight.\footnote{An alternative would be to count only {\em modifiable} links when measuring depth. In many 
+typical NN applications this would not make a difference, but in some it would, e.g., Sec.~\ref{worrl}.}
+
+Suppose an episode and its event sequence $x_1,\ldots,x_T$ satisfy a computable criterion 
+used to decide whether a given problem has been solved 
+(e.g., total error $E$ below some threshold). 
+Then the set of used weights is called a {\em solution} to the problem, 
+and the depth of the deepest CAP within the sequence is called the {\em solution depth}. 
+There may be other solutions (yielding different event sequences) with different depths.
+Given some fixed NN topology,
+the  smallest depth of any solution is called the {\em problem depth}.
+
+
+
+Sometimes we also speak of the {\em depth of an architecture}:
+SL FNNs with fixed topology imply a problem-independent maximal problem depth bounded by
+ the number of non-input layers.
+Certain SL RNNs
+with fixed weights for all 
+connections except those to output units~\citep{Jaeger2001a,maass2002,Jaeger:04,schrauwen2007} 
+%jaeger:techreport2002
+have
+a maximal problem depth of 1,
+because only the final links in the corresponding CAPs are modifiable. 
+In general, however, RNNs 
+may learn to solve problems of potentially unlimited depth.
+
+Note that the definitions above are 
+solely based on the depths of causal chains, and
+agnostic to the temporal distance between events.
+For example, {\em shallow} FNNs perceiving large ``time windows" of input events may 
+correctly classify {\em long} input sequences through appropriate output events, and thus 
+solve {\em shallow}
+problems involving {\em long} time lags between relevant events.
+
+At which problem depth does {\em Shallow Learning} end, and {\em Deep Learning} begin?
+Discussions with DL
+experts have not yet yielded a conclusive response to this question. Instead of committing myself to a precise 
+answer, let me just define for the purposes of this overview:
+problems of depth $>10$ require 
+{\em Very Deep Learning}.
+
+The {\em difficulty} of a problem may have little to do with its depth. 
+Some NNs can quickly learn to solve certain deep problems,
+e.g., through random weight guessing (Sec.~\ref{1991a})
+or other types of direct search (Sec.~\ref{evorl}) or indirect search (Sec.~\ref{comrl}) in weight space,
+or through training an NN first on shallow problems whose solutions may then generalize to deep problems,
+or through collapsing sequences of (non)linear operations into a single (non)linear 
+operation~\citep[but see an analysis of non-trivial aspects of deep linear networks,][Section B]{baldihornik95}.
+In general, however, finding an NN that precisely models a given training set is an 
+NP-complete problem~\citep{judd1990,blum1992},
+also in the case of deep NNs~\citep{sima1994,souto1999,windisch2005};
+compare a survey of negative results~\citep[Section 1]{sima2002}.
+
+
+Above we have focused on SL.
+In the more general case of RL in unknown environments, 
+$pcc(p,q)$ is also true if $x_p$ is an output event and $x_q$ 
+any later input event---any action may affect the environment and thus any later perception.
+(In the real world, the environment may even influence {\em non-input} events 
+computed on a physical hardware entangled with the entire universe, 
+but this is ignored here.) 
+It is possible to model and replace
+such unmodifiable {\em environmental} PCCs
+through a part of the NN that has already learned to predict (through some of its units) 
+ input events (including reward signals) from
+former input events and actions (Sec.~\ref{worrl}). Its weights are frozen,
+but can help to assign credit to other, still modifiable weights used to compute actions (Sec.~\ref{worrl}).
+This approach may lead to very deep CAPs though. 
+
+
+Some DL research is about automatically rephrasing problems such that their
+ depth is reduced (Sec.~\ref{themes}).
+In particular,
+sometimes UL is used to make SL problems less deep, e.g., Sec.~\ref{1991b}.
+Often {\em Dynamic Programming} (Sec.~\ref{dp}) is used to facilitate certain traditional
+RL problems, e.g., Sec.~\ref{trarl}.
+Sec.~\ref{super} focuses on CAPs for
+SL, Sec.~\ref{deeprl} on the more complex case of RL. 
+
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}

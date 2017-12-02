@@ -1,0 +1,402 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{DL in FNNs and RNNs for Reinforcement Learning (RL)}
+\label{deeprl}
+
+So far we have focused on 
+Deep Learning (DL) in supervised or unsupervised NNs.
+Such NNs learn to perceive / encode / predict / classify 
+patterns or pattern sequences, 
+but they do not learn to act in the more general
+sense of {\em Reinforcement Learning} (RL) in unknown environments \citep[see surveys, e.g.,][]{Kaelbling:96,Sutton:98,wiering2012}.
+Here we add a discussion of DL FNNs and RNNs for RL. 
+It will be shorter than the discussion of FNNs and RNNs for SL and UL (Sec.~\ref{super}),
+reflecting the current size of the various fields.
+
+Without a teacher, solely from occasional  real-valued
+pain and pleasure signals,  RL agents must discover how to interact with a
+dynamic, initially unknown environment to maximize their expected cumulative reward
+signals (Sec.~\ref{notation}).
+There may be arbitrary, a priori unknown delays between actions and perceivable consequences.
+The problem is as hard as any problem of computer science,
+since any task with a computable description can be formulated in the RL framework \citep[e.g.,][]{Hutter:05book+}.
+For example, an answer to the famous question of 
+whether $P=NP$~\citep{Levin:73,Cook:71}
+would also set limits for what is achievable by general RL.
+Compare more specific limitations, e.g.,~\citep{blondel2000,madani2003,vlassis2012}.
+The following subsections mostly focus on certain obvious intersections 
+between DL and RL---they cannot serve as a general RL survey.  
+
+\subsection{RL Through NN World Models Yields RNNs With Deep CAPs}
+\label{worrl}
+
+In the special case of an RL FNN controller 
+$C$ interacting with a 
+{\em deterministic, predictable} environment, 
+a separate FNN called $M$ 
+can learn to become $C$'s {\em world model} through {\em system identification},
+predicting $C$'s inputs from previous actions and inputs~\citep[e.g.,][]{Werbos:81sensitivity,Werbos:87,Munro:87,Jordan:88,Werbos:89identification,Werbos:89neurocontrol,RobinsonFallside:89,JordanRumelhart:90,Schmidhuber:90sandiego,narendra1990,Werbos:92sticky,kawato1993,cochocki1993,levin1995,miller1995,ljung1998,prokhorov2001,ge2010}.
+Assume $M$ has learned to produce accurate predictions.
+We can use $M$ to substitute the environment.
+Then $M$ and $C$ form an RNN where $M$'s outputs become inputs of $C$, 
+whose outputs (actions) in turn become inputs of $M$.
+Now BP  for RNNs (Sec.~\ref{bp}) can be used 
+to achieve {\em desired input events}  such as high real-valued reward signals:
+While $M$'s weights remain fixed,
+gradient information for $C$'s weights is propagated
+back through $M$ down into $C$ and
+back through $M$ etc. 
+To a certain extent, the approach is also applicable in probabilistic or uncertain environments, as long as the inner products of $M$'s $C$-based gradient estimates and $M$'s ``true" gradients tend to be positive. 
+
+In general, this approach
+ implies deep CAPs for $C$, unlike in DP-based traditional  RL (Sec.~\ref{trarl}).
+Decades ago, the method was used to
+ learn to back up a model truck~\citep{NguyenWidrow:89}.
+An RL active vision system used it to learn sequential shifts (saccades) of a fovea, to
+detect targets in visual scenes~\citep{SchmidhuberHuber:91},
+thus learning to control selective attention.
+Compare RL-based attention learning without NNs~\citep{Whitehead:92}.
+
+
+To allow for memories of previous events in
+{\em partially observable worlds}
+ (Sec.~\ref{pomrl}),
+the most general variant of this technique uses 
+RNNs instead of FNNs to implement both $M$ and $C$ ~\citep{Schmidhuber:90sandiego,Schmidhuber:91nips,feldkamp1998}.
+This may cause deep CAPs not only for $C$ but also for $M$.
+
+$M$ can also be used to optimize expected reward by {\em planning} future action sequences~\citep{Schmidhuber:90sandiego}.
+In fact, the winners of the 2004 RoboCup World Championship in the fast league~\citep{egorova03}
+trained NNs to predict the effects of steering signals on fast
+robots with 4 motors for 4 different wheels. During play, such NN models were used 
+to achieve desirable subgoals, 
+by optimizing action sequences through quickly planning ahead. The approach also
+was used to create {\em self-healing} robots able to compensate for faulty motors whose effects do not longer 
+match the predictions of the NN models~\citep{gloye05,schmidhuber2007pro}. 
+
+Typically $M$ is not given in advance. Then 
+an essential question is: which experiments should $C$ conduct to quickly improve $M$?
+The {\em Formal Theory of Fun and Creativity}~\citep[e.g.,][]{Schmidhuber:06cs,Schmidhuber:13powerplay}
+ formalizes driving forces and value functions behind such curious and exploratory behavior: 
+A measure of the {\em learning progress} of $M$ becomes the intrinsic reward of $C$~\citep{Schmidhuber:91singaporecur}; compare~\citep{Singh:05nips,Oudeyer:12intrinsic}.
+This motivates $C$ to create action sequences (experiments) such that $M$ makes quick progress.
+
+
+
+\subsection{Deep FNNs for Traditional RL and Markov Decision Processes (MDPs)}
+\label{trarl}
+
+The classical
+approach to RL~\citep{Samuel:59,Bertsekas:96} makes the simplifying 
+assumption of {\em Markov Decision Processes} (MDPs): 
+the current input of the RL agent
+conveys all information necessary to compute an optimal next 
+output event or decision. 
+This allows for greatly reducing CAP depth in RL NNs (Sec.~\ref{caps},~\ref{worrl}) 
+by using the {\em Dynamic Programming} (DP) trick~\citep{Bellman:1957}.
+The latter is often explained in a probabilistic framework~\citep[e.g.,][]{Sutton:98}, 
+but its basic idea can already be conveyed in a deterministic setting.
+For simplicity, 
+using the notation of Sec.~\ref{notation},
+let input events $x_t$ encode the entire current state of
+the environment, including a real-valued reward $r_t$
+(no need to introduce additional vector-valued notation, 
+since real values can encode arbitrary vectors of real values).
+The original RL goal (find weights that maximize the sum of all rewards of an episode) 
+is replaced by an equivalent set of alternative goals set by a
+real-valued value function $V$ defined on input events.
+Consider any two subsequent input events $x_t,x_k$.
+Recursively define $V(x_t)=r_t+V(x_k)$, where $V(x_k)=r_k$ if $x_k$ is the {\em last} input event.
+Now search for weights that maximize the $V$ 
+of all input events, 
+by causing appropriate output events or actions. 
+
+Due to the Markov assumption,
+an FNN suffices to implement the policy that maps input to output events.
+Relevant CAPs are not deeper than this FNN. 
+$V$ itself is often modeled by a {\em separate FNN} (also yielding typically short CAPs) 
+learning to approximate $V(x_t)$ 
+only from {\em local} information $r_t, V(x_k)$.
+
+Many variants of traditional RL exist~\citep[e.g.,][]{BartoSuttonAnderson:83,Watkins:89,WatkinsDayan:92,Moore:93,Schwartz:93,Rummery:94,Singh:94R,Baird:95,Kaelbling:95,Peng:96,Mahadevan:96,Tsitsiklis:96,96-BradtkeLstd,Santamaria:97,prwu97,Sutton:98,Wiering:98,baird:nips12,meuleau:icuai99,Doya:00,Bertsekas:01,brafman02,Abounadi:02,03-LspiLagoudakis,09-Gtd,10-GqLambda,hasselt2012}.
+%Baird:94,
+Most are formulated in a probabilistic framework,
+and evaluate pairs of input and output (action) events (instead of input events only).
+To facilitate certain mathematical derivations,
+some discount delayed rewards,
+but such distortions of the original RL problem are problematic.
+
+Perhaps the most well-known RL NN is the  world-class RL backgammon player~\citep{Tesauro:94},
+which achieved the level of human world champions by playing against itself.
+Its nonlinear, rather shallow FNN maps a large but finite
+number of discrete board states to values.   
+More recently, a rather deep GPU-CNN  was used in
+a traditional RL framework  to play several Atari 2600 computer games directly from 
+84x84 pixel 60 Hz video input~\citep{atari2013},
+using experience replay~\citep{Lin:93},
+extending previous work on {\em Neural Fitted Q-Learning} (NFQ)~\citep{nfq}.
+Even better results are achieved by using (slow) Monte Carlo tree planning to
+train comparatively fast deep NNs~\citep{atarimcts2014}.
+Compare RBM-based RL~\citep{sallans2004} with high-dimensional inputs~\citep{elfwing2010},
+earlier RL Atari players~\citep{gruettner2010multi},
+and an earlier, raw video-based RL NN for computer games~\citep{koutnik:gecco13} trained by {\em Indirect Policy Search}
+(Sec.~\ref{comrl}). 
+
+
+\subsection{Deep RL RNNs for Partially Observable MDPs (POMDPs)}
+\label{pomrl}
+
+The {\em Markov assumption} 
+(Sec.~\ref{trarl}) is often unrealistic. We cannot directly perceive 
+what is behind our back, let alone the current state of the entire universe. 
+However, memories of previous events
+can help to deal with  
+{\em partially observable Markov decision problems} (POMDPs)~\citep[e.g.,][]{Schmidhuber:90sandiego,Schmidhuber:91nips,Ring:91,Ring:93,Ring:94,Williams:92,Lin:93,Teller:94,Kaelbling:95,Littman:95,Boutilier:96,Jaakkola:95,McCallum:96,kimura1997,Wiering:96levin,Wiering:97ab,otsuka2010}.
+%Littman:96,
+A naive way of implementing memories without leaving the MDP framework 
+(Sec.~\ref{trarl}) would be to simply consider a 
+possibly huge state space, namely, 
+the set of all possible observation histories and their prefixes. 
+A more realistic way is to use function approximators such as RNNs that produce 
+compact state features as a function of the entire history seen so far.
+Generally speaking, POMDP RL often uses DL RNNs to learn 
+which events to memorize and which to ignore.
+Three basic alternatives are: 
+\begin{enumerate}
+\item
+Use an RNN as a value function mapping arbitrary event histories to values~\citep[e.g.,][]{Schmidhuber:90cmss,Schmidhuber:91nips,Lin:93,Bakker:01nips}. 
+%~\citep{Schmidhuber:90cmss,Schmidhuber:90washington,Schmidhuber:91nips,Lin:93,Bakker:01nips}.
+For example, deep LSTM RNNs were used in this way for RL robots~\citep{Bakker:03robot}.
+\item
+Use an RNN controller in conjunction with a second RNN as predictive world model,
+to obtain a combined RNN with deep CAPs---see Sec.~\ref{worrl}.
+\item
+Use an RNN for RL by {\em Direct Search} (Sec.~\ref{evorl}) or {\em Indirect Search} (Sec.~\ref{comrl}) in weight space.
+\end{enumerate}
+In general, however, POMDPs may imply greatly increased CAP depth.
+
+
+
+\subsection{RL Facilitated by Deep UL in FNNs and RNNs}
+\label{unsrl}
+
+RL machines 
+may profit from UL for input preprocessing~\citep[e.g.,][]{Jodogne07}.
+In particular, an UL NN  can 
+learn to compactly encode environmental inputs such as images or videos,
+e.g., Sec.~\ref{1987},~\ref{1991b},~\ref{2006}.
+The compact codes (instead of the high-dimensional 
+raw data) can be fed into an RL machine,
+whose job thus may become much easier~\citep{Legenstein2010,cuccu2011},
+just like SL may profit from UL, e.g., Sec.~\ref{1987},~\ref{1991b},~\ref{2006}.
+For example, NFQ~\citep{nfq} was applied to real-world control tasks~\citep{lange,rieijcnn12} 
+where purely visual inputs were compactly encoded by deep
+autoencoders (Sec.~\ref{1987},~\ref{2006}). 
+RL combined with 
+UL based on {\em Slow Feature Analysis}~\citep{WisSej2002,DBLP:journals/neco/KompellaLS12} enabled
+a real humanoid robot to learn skills from raw high-dimensional video streams~\citep{luciwkomp13}.
+%\citep{kompella12icdl,luciwkomp13}.
+To deal with POMDPs (Sec.~\ref{pomrl}) involving high-dimensional inputs, 
+RBM-based RL was used~\citep{otsuka2010phd},
+%otsuka2008
+and a RAAM~\citep{pollack1988implications} (Sec.~\ref{1987})
+was employed as a deep unsupervised sequence encoder  
+ for RL~\citep{Gisslen2011agi}.
+Certain types of RL and UL also were combined in biologically plausible RNNs with spiking 
+neurons (Sec.~\ref{spiking})~\citep[e.g.,][]{yin2012,maass2013,rezende2014}.
+
+
+
+\subsection{Deep Hierarchical RL (HRL) and Subgoal Learning with FNNs and RNNs}
+\label{subrl}
+ 
+Multiple learnable 
+levels of abstraction~\citep{Fu:77,Lenat:84,Ring:94,bengio2013tpami,lideng2014} seem as important for RL as for SL. 
+Work on NN-based {\em Hierarchical RL} (HRL) has been
+published since the early 1990s. 
+In particular,
+gradient-based {\em subgoal discovery} with FNNs or RNNs decomposes RL tasks into subtasks
+for RL submodules~\citep{Schmidhuber:91icannsubgoals,SchmidhuberWahnsiedler:92sab}.
+Numerous alternative HRL techniques have been proposed~\citep[e.g.,][]{Ring:91,Ring:94,Jameson:91,TenenbergKarlssonWhitehead,Weiss:94a,partigame,Precup:MTimeNIPS98,Dietterich:MAXQ,menache2002,DoyaSamejimaKatagiriKawato,ghavamzadehICML03,barto2003hrl,SamejimaDoyaKawato,Bakker:04ias,stoneML05,simsek2008skill}.
+While HRL frameworks such as {\em Feudal RL}~\citep{Dayan:93} 
+and {\em options}~\citep{sutton1999between,Barto:04,Singh:05nips} 
+do not directly address the problem of automatic subgoal discovery,
+{\em HQ-Learning}~\citep{Wiering:97ab}  automatically decomposes POMDPs (Sec.~\ref{pomrl})
+into sequences of simpler subtasks that can be solved by memoryless policies
+learnable by reactive sub-agents.    
+%The HASSLE algorithm~\citep{Bakker:04ias}  outperformed earlier methods in experiments.
+Recent HRL organizes potentially deep NN-based RL sub-modules into
+self-organizing, 2-dimensional motor control maps~\citep{ring:icdl2011}
+inspired by neurophysiological findings~\citep{Graziano:book}.
+
+
+
+\subsection{Deep RL by Direct NN Search / Policy Gradients / Evolution}
+\label{evorl}
+
+Not quite as universal as the methods of Sec.~\ref{unirl},
+yet both practical and more general than most traditional RL algorithms (Sec.~\ref{trarl}), are 
+methods for {\em Direct Policy Search} (DS).
+Without a need for value functions or Markovian assumptions (Sec.~\ref{trarl},~\ref{pomrl}), 
+the weights of an FNN or RNN are directly evaluated on the given RL problem.
+The results of successive trials inform further search for better weights.
+Unlike with RL supported by BP (Sec.~\ref{1970},~\ref{pomrl},~\ref{worrl}),
+CAP depth (Sec.~\ref{caps},~\ref{1991a}) is not a crucial issue.
+DS may solve the credit assignment problem without 
+backtracking through deep causal chains of 
+modifiable parameters---it neither cares for their existence,
+nor tries to exploit them.
+%~\citep{Schmidhuber:01direct}. 
+
+
+An important class of DS methods for NNs are 
+{\em Policy Gradient}
+methods~\citep{Williams:86,Williams:88,Williams:92,Sutton:99,baxter2001,aberdeenthesis,ghavamzadehICML03,stoneICRA04,wierstraCEC08,rueckstiess2008b,peters2008neuralnetworks,peters2008neurocomputing,sehnke2009parameter,gruettner2010multi,wierstra2010,peters2010,grondman2012,heess2012}.
+%sehnke2010policy,baxter99direct,wierstraICANN07,
+Gradients of the total reward with respect to policies (NN weights) are 
+estimated (and then exploited) through repeated NN evaluations.
+
+RL NNs can also be evolved through
+{\em Evolutionary Algorithms} (EAs)~\citep{Rechenberg:71,Schwefel:74,Holland:75,Fogel:66,goldberg:gabook89}
+ in a series of trials.
+Here several policies are represented by a population
+of NNs improved through mutations and/or
+repeated recombinations of the population's fittest individuals~\citep[e.g.,][]{montana1989,fogel1990,maniezzo1994,happel1994,nolfi1994}.
+Compare {\em Genetic Programming} (GP)~\citep{Cramer:85}~\citep[see also][]{smith80} which
+can be used to evolve computer programs of variable size~\citep{gp87,Koza:92},
+and {\em Cartesian GP}~\citep{miller2000,miller2009} 
+%miller2009 also with Simon Harding
+for evolving graph-like programs,
+including NNs~\citep{khan2010} and their topology~\citep{turner2013}.
+Related methods include 
+{\em probability distribution-based EAs}~\citep{Baluja:94,saravanan:ieeeexpert95,Salustowicz:97ecj,Larraanaga2001}, 
+{\em Covariance Matrix Estimation Evolution Strategies} (CMA-ES)~\citep{hansenCMA,hansen2003,igel:cec03,heidrich-meisner:09},
+and {\em NeuroEvolution of Augmenting Topologies} (NEAT)~\citep{stanley:ec02}.
+Hybrid methods combine traditional NN-based RL (Sec.~\ref{trarl}) and EAs~\citep[e.g.,][]{whiteson2006}.
+
+
+Since RNNs are general computers, 
+RNN evolution is like GP in the sense that it can evolve general programs.
+Unlike sequential programs learned by traditional GP, however, RNNs can mix sequential and parallel information processing in a natural and efficient way, as already 
+mentioned in Sec.~\ref{intro}. Many RNN evolvers have been proposed \citep[e.g.,][]{miller:icga89,wieland1991,cliff1993,yao:review93,nolfi:alife4,Sims:1994:EVC,yamauchi94sequential,miglino95evolving,moriarty:phd,pasemann99,juang2004,whiteson2012}.
+One particularly effective  family of methods {\em coevolves} neurons, combining them into networks, and
+selecting those neurons for reproduction that participated in the best-performing
+networks~\citep{moriarty:ml96,gomez:phd,Gomez:03}. This
+can help to solve deep POMDPs~\citep{Gomez:05gecco}.
+{\em Co-Synaptic Neuro-Evolution} (CoSyNE) does something similar on the level of synapses or weights~\citep{Gomez:08jmlr};
+benefits of this were shown on difficult nonlinear POMDP benchmarks.
+% removed {gomez:ab97,gomez:ijcai99,Gomez:06ecml}. In an extensive comparison of RL methods~\citep{Gomez:08jmlr}, {\em Co-Synaptic Neuro-Evolution} (CoSyNE) achieved the best known results on a set of difficult nonlinear POMDP benchmarks, including very deep ones. 
+
+{\em Natural Evolution Strategies} (NES)~\citep{wierstraCEC08,glasmachers:2010b,Sun2009a,sun:gecco13} link policy
+gradient methods and evolutionary approaches through the concept of {\em Natural Gradients}~\citep{amari1998natural}.
+RNN evolution may also help to improve SL for deep RNNs 
+through {\em Evolino}~\citep{Schmidhuber:07nc} (Sec.~\ref{1991a}).
+%~\citep{Schmidhuber:05ijcai,Schmidhuber:07nc}
+
+
+\subsection{Deep RL by Indirect Policy Search / Compressed NN Search}
+\label{comrl}
+
+Some DS methods (Sec.~\ref{evorl}) can evolve NNs  
+with hundreds or thousands of weights, but not millions. 
+How to search for large and deep NNs? 
+Most SL and RL methods mentioned so far somehow search the space of weights $w_i$. 
+Some profit from a reduction of the search space through shared $w_i$ 
+that get reused over and over again, e.g., in CNNs (Sec.~\ref{1979},~\ref{1989},~\ref{2007},~\ref{2012}),
+or in RNNs for SL (Sec.~\ref{1970},~\ref{1997},~\ref{2009}) and RL (Sec.~\ref{worrl},~\ref{pomrl},~\ref{evorl}).
+
+It may be possible, however, to exploit {\em additional} regularities/compressibilities 
+in the space of solutions, through {\em indirect search in weight space}.
+Instead of evolving large NNs directly (Sec.~\ref{evorl}), one can sometimes greatly reduce
+the search space by evolving 
+{\em compact encodings} of NNs, e.g.,  through  {\em Lindenmeyer Systems}~\citep{lindenmayer68,lindenmayer94}, {\em graph rewriting}~\citep{kitano90}, {\em Cellular Encoding}~\citep{gruau:tr96-048}, {\em HyperNEAT}~\citep{stanley07,stanley09,clune2011,vandenberg2013} (extending
+NEAT; Sec.~\ref{evorl}), and extensions thereof~\citep[e.g.,][]{risi2012}. 
+This helps to avoid overfitting (compare Sec.~\ref{mdlnn},~\ref{tricks}) and is 
+closely related to the topics of regularisation 
+and MDL (Sec.~\ref{mdl}).
+
+A general approach~\citep{Schmidhuber:97nn+} for both SL and RL seeks to compactly encode weights of large NNs~\citep{Schmidhuber:97nn+} through programs written in a {\em universal programming language}~\citep{Goedel:31,Church:36,Turing:36,Post:36}. Often it is much more efficient to systematically search the space of such programs with a bias towards short and fast 
+programs~\citep{Levin:73,Schmidhuber:97nn+,Schmidhuber:04oops}, 
+%Schmidhuber:97bias,
+instead of directly 
+searching the huge space of possible NN weight matrices.
+A previous 
+universal language for encoding NNs  was assembler-like~\citep{Schmidhuber:97nn+}. More recent work uses more practical languages based on coefficients of popular transforms (Fourier, wavelet, etc). 
+In particular, 
+ RNN weight matrices may be compressed like images, by encoding them through the coefficients of a 
+{\em discrete cosine transform} (DCT)~\citep{koutnik:gecco10,koutnik:gecco13}.
+%\citep{koutnik:agi10,koutnik:gecco10,koutnik:gecco13,DBLP:conf/ppsn/SrivastavaSG12}.
+%Compact DCT-based descriptions can be  evolved through Natural Evolution Strategies (NES)~\citep{glasmachers:2010b,Sun2009a,sun:gecco13} or Co-Synaptic Neuro-Evolution (CoSyNE) ~\citep{Gomez:08jmlr} 
+Compact DCT-based descriptions can be evolved through NES or CoSyNE
+(Sec.~\ref{evorl}).
+An RNN with over a million weights learned (without a teacher) to drive a simulated car 
+in the TORCS driving game~\citep{wcci:torcs:09,torcs-manual:2011},
+based on a high-dimensional video-like visual input stream~\citep{koutnik:gecco13}.
+The RNN learned both control and visual processing from scratch, without being
+aided by UL. (Of course, UL might help to generate more compact image codes
+(Sec.~\ref{unsrl},~\ref{ul})
+ to be fed into a smaller RNN, 
+to reduce the overall computational effort.) 
+
+\subsection{Universal RL}
+\label{unirl}
+
+%Is it possible to learn better and better learning algorithms? In 1987, a first hierarchical approach~\citep[p. 7-13]{schmidhuber87} towards self-referential self-improvement was to apply Genetic Programming (GP)~\citep{Cramer:85,smith80,gp87,Koza:92} to itself, to evolve even better GP methods~\citep{schmidhuber87}---a form of meta-GP. Meta-GP recursively builds a stack of GP modules, each using GP to learn a better GP learning algorithm for the lower level. The recursion terminates based on the fitness of the programs in the lowest (domain) level. 
+
+{\em General purpose learning algorithms}
+may improve themselves in open-ended fashion
+and environment-specific 
+ways in a lifelong learning 
+context~\citep{schmidhuber87,Schmidhuber:97bias,Schmidhuber:97ssa,scholarpedia2010}. 
+%out Schmidhuber:94self,Schmidhuber:96meta,
+The most general type of RL is constrained only by the
+fundamental limitations of computability identified by 
+the founders of theoretical computer science 
+\citep{Goedel:31,Church:36,Turing:36,Post:36}.
+Remarkably, there exist blueprints of
+ {\em universal problem solvers} or {\em universal RL machines}
+for unlimited problem depth 
+that are  
+time-optimal in various theoretical senses~\citep{Hutter:05book+,Hutter:01fast+,Schmidhuber:02colt,Schmidhuber:05gmai}. 
+In particular, the {\em G\"{o}del Machine} can be implemented 
+on general computers such as RNNs and may improve 
+any part of its software (including the learning algorithm itself)  
+in a way that is provably time-optimal in a certain sense~\citep{Schmidhuber:05gmai}. It can be initialized by an 
+{\em asymptotically optimal}
+meta-method~\citep{Hutter:01fast+} (also applicable to RNNs)
+which will solve any well-defined problem as quickly as the unknown fastest way of solving it, save for an additive constant overhead that becomes negligible as problem size grows. Note that most problems are large; only few are small. AI and DL researchers are still in business because many are interested in problems so small that it is worth trying to reduce the overhead through less general methods, including heuristics. Here I won't further discuss universal RL methods, which go beyond what is usually called DL. 
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}

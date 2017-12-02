@@ -1,0 +1,132 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{Event-Oriented Notation for Activation Spreading in NNs}
+\label{notation}
+
+Throughout this paper, let $i,j,k,t,p,q,r$ denote positive integer variables
+assuming ranges implicit in the given contexts. 
+Let $n,m,T$ denote positive integer constants.
+
+An NN's topology may change over time (e.g., Sec.~\ref{1965},~\ref{mdlnn}).
+At any given moment, 
+it can be described as a finite subset of units (or nodes or neurons)  $N=\{u_1,u_2, \ldots, \}$ and a finite set 
+$H \subseteq N \times N$ of directed edges or connections between nodes.
+FNNs are acyclic graphs, RNNs cyclic. 
+The first (input) layer is the set of input units, a subset of $N$.
+In FNNs, the $k$-th layer ($k>1$) is the set of all nodes 
+$u \in N$ such that there is an edge path of length $k-1$ (but no longer path) between some input unit and $u$.
+There may be shortcut connections between distant layers.
+In sequence-processing, fully connected 
+ RNNs, all units have connections to all non-input units.
+
+% $U_k \in N$ such that there is an edge path of size $k-1$: $((U_1, U_2),(U_2, U_3), \ldots,(U_{k-1}, U_k))$, where $U_1$ is some input node, $U_i \in N$, $(U_i, U_{i+1}) \in H$, and no longer edge path connects any input unit to $U_k$.
+
+
+The NN's behavior or program is determined by a set of real-valued, possibly modifiable,
+parameters or weights 
+$w_i$ $(i=1,\ldots,n)$.
+We now focus on a single finite {\em episode} or {\em epoch} of information processing 
+and activation spreading, without learning through weight changes.
+The following slightly unconventional 
+notation is designed to compactly describe what is happening
+ {\em during the runtime} of the system. 
+
+
+During an episode, 
+there is a {\em partially causal sequence}  
+$x_t (t=1,\ldots,T)$ of real values that I call events.
+Each $x_t$ is either an input set by the environment, 
+or the activation of a unit 
+that may directly depend on other $x_k (k<t)$ through a current 
+NN topology-dependent 
+set $in_t$ of indices $k$ representing incoming causal connections or links.
+Let the function $v$ encode topology information and map such event index pairs $(k,t)$ to weight indices.
+For example, in the non-input case we may have 
+$x_t=f_t(net_t)$ 
+with real-valued 
+$net_t=\sum_{k \in in_t} x_k w_{v(k,t)}$ (additive case)
+or $net_t=\prod_{k \in in_t} x_k w_{v(k,t)}$ (multiplicative case),
+where $f_t$ is a typically nonlinear real-valued {\em activation function}
+such as $tanh$.
+In many recent competition-winning NNs 
+(Sec.~\ref{2011}, \ref{2012}, \ref{2013})
+there also are  events of the type $x_t=max_{k \in in_t}(x_k)$;
+some network types may also use complex polynomial activation functions (Sec.~\ref{1965}).
+$x_t$ may directly affect certain  $x_k (k>t)$ through outgoing connections or links 
+represented through a current 
+set $out_t$ of indices $k$ with $t \in in_k$.
+Some of the non-input events are called {\em output events}.
+
+Note that many of the $x_t$ may refer to different, time-varying activations of the {\em same} unit
+in sequence-processing RNNs~\citep[e.g.,][{\em ``unfolding in time"}]{Williams:89},
+or also in FNNs sequentially exposed to time-varying input patterns of a large training set 
+encoded as input events.
+During an episode, the same weight may get reused over and over again
+in topology-dependent ways, e.g., in RNNs, or in convolutional NNs
+(Sec.~\ref{1979},~\ref{1989}).
+I call this weight sharing {\em across space and/or time}.
+Weight sharing may greatly reduce the NN's descriptive complexity, which is the number of bits of information 
+required to describe the NN (Sec.~\ref{mdl}). 
+
+
+In {\em Supervised Learning} (SL), 
+certain NN output events $x_t$  may be associated with teacher-given, real-valued labels or targets $d_t$ 
+yielding errors $e_t$, e.g., $e_t=1/2(x_t-d_t)^2$.
+A typical goal of supervised NN training is to find weights that 
+yield episodes with small total error $E$, 
+the sum of all such $e_t$. 
+The hope is that the NN will generalize well in later episodes,
+causing only small errors on previously unseen sequences of input events. 
+Many alternative error functions for SL and UL are possible.
+
+SL assumes that input events are independent of earlier output events (which may affect
+the environment  through actions causing subsequent perceptions).
+This assumption does not hold 
+in the broader fields of {\em Sequential Decision Making} and  {\em Reinforcement Learning} (RL)~\citep{Kaelbling:96,Sutton:98,Hutter:05book+,wiering2012} (Sec.~\ref{deeprl}).
+In RL, some of the input events may encode real-valued reward signals given by the environment, 
+and a typical goal is to find weights that yield episodes with a high sum of reward signals,
+through sequences of appropriate output actions.
+
+Sec.~\ref{1970} will use the notation above to compactly 
+describe a central algorithm of DL, namely,
+backpropagation (BP) for supervised weight-sharing FNNs and RNNs.
+(FNNs may be viewed as RNNs with certain fixed zero weights.)
+Sec.~\ref{deeprl} will address the more general RL case.
+
+
+
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}

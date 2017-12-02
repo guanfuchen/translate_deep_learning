@@ -1,0 +1,141 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{Recurring Themes of Deep Learning}
+\label{themes}
+
+\subsection{Dynamic Programming for Supervised/Reinforcement Learning (SL/RL)}
+\label{dp}
+
+% \begin{sloppypar}
+One recurring theme of DL is
+{\em Dynamic Programming} (DP)~\citep{Bellman:1957},
+which  can help to facilitate credit assignment
+under certain assumptions. For example, 
+in SL NNs, backpropagation itself can be viewed as a DP-derived method (Sec.~\ref{1970}).
+In traditional RL based on strong Markovian assumptions,
+DP-derived methods can help to greatly reduce problem depth (Sec.~\ref{trarl}). 
+DP algorithms are also essential for systems that combine concepts of NNs and
+graphical models, such as {\em Hidden Markov
+Models} (HMMs)~\citep{stratonovich1960,baum1966}
+and {\em Expectation Maximization} (EM)~\citep{dempster77,friedman2001}, e.g., \citep{bottou91,bengio91,bourlard+morgan:1994,baldichauvin96,jordan2001,bishop:2006,hastie2009,domingos2011,dahl2012,speech2012,diwu2014}.
+
+
+
+\subsection{Unsupervised Learning (UL) Facilitating SL and RL}
+\label{ul}
+
+Another recurring theme is how 
+UL 
+can facilitate both SL (Sec.~\ref{super}) and RL (Sec.~\ref{deeprl}).
+UL (Sec.~\ref{ulnn}) is normally used to 
+encode raw incoming data such as video or speech streams
+in a form that is more convenient for subsequent goal-directed learning.
+In particular, codes that describe the original data in a less redundant or more compact way
+can be fed into SL (Sec.~\ref{1991b},~\ref{2006})
+or RL machines (Sec.~\ref{unsrl}), whose
+search spaces may thus become smaller 
+(and whose CAPs shallower)
+than those necessary for dealing with the raw data.
+UL is closely 
+connected to the topics of 
+{\em regularization} 
+and compression (Sec.~\ref{mdl},~\ref{mdlnn}).
+
+\subsection{Learning Hierarchical Representations Through Deep SL, UL, RL}
+\label{hie}
+
+Many methods of 
+{\em  Good Old-Fashioned Artificial Intelligence} (GOFAI)~\citep{Nilsson:80} 
+as well as more recent approaches to AI~\citep{russell1995} and {\em Machine Learning}~\citep{Mitchell:97} 
+learn hierarchies of more and more abstract data representations.
+For example, certain methods of syntactic pattern recognition~\citep{Fu:77} such as
+{\em grammar induction} discover hierarchies of  
+formal rules to model observations.
+The partially (un)supervised
+{\em Automated Mathematician / EURISKO}~\citep{Lenat:83,Lenat:84} continually learns   
+concepts by combining previously learnt concepts.
+Such hierarchical representation learning~\citep{Ring:94,bengio2013tpami,lideng2014} is also a recurring theme of
+DL NNs for SL (Sec.~\ref{super}), 
+UL-aided SL (Sec.~\ref{1987},~\ref{1991b},~\ref{2006}), 
+and hierarchical RL (Sec.~\ref{subrl}).
+Often, abstract hierarchical representations are natural by-products of
+data compression (Sec.~\ref{mdl}), e.g., Sec.~\ref{1991b}. 
+
+
+\subsection{Occam's Razor: Compression and Minimum Description Length (MDL)}
+\label{mdl}
+
+Occam's razor favors simple solutions over complex ones.
+Given some programming language,
+the principle of {\em Minimum Description Length} (MDL) can be used 
+to measure the complexity of a solution candidate by
+the length of the shortest program that 
+computes it~\citep[e.g.,][]{Solomonoff:64,Kolmogorov:65,Chaitin:66,Wallace:68,Levin:73a,Solomonoff:78,Rissanen:86,Blumer:87,LiVitanyi:97,gruenwald2005}.
+Some methods explicitly take into account program runtime~\citep{Allender:92,Watanabe:92,Schmidhuber:97nn+,Schmidhuber:02colt}; 
+many consider only programs with constant runtime, written
+in non-universal programming languages~\citep[e.g.,][]{Rissanen:86,Hinton:93}.
+In the NN case, 
+the MDL principle suggests that low NN weight complexity
+corresponds to high NN probability 
+in the  Bayesian view~\citep[e.g.,][]{MacKay:92b,Buntine:91,neal1995,freitas2003},
+and to high generalization performance~\citep[e.g.,][]{BaumHaussler:89}, 
+without overfitting the training data.
+Many methods have been proposed for {\em regularizing} NNs, that is, 
+searching for solution-computing but simple, low-complexity SL NNs (Sec.~\ref{mdlnn}) 
+and RL NNs (Sec.~\ref{comrl}).
+This is closely 
+related to certain UL methods (Sec.~\ref{ul},~\ref{ulnn}).
+
+
+
+\subsection{Fast Graphics Processing Units (GPUs) for DL in NNs}
+\label{gpu}
+
+While the previous millennium saw several attempts at creating fast NN-specific hardware~\citep[e.g.,][]{jackel-90,faggin92,ramacher93,widrow94,heemskerk1995,cbm97,urlbe1999},
+and at exploiting standard hardware~\citep[e.g.,][]{anguita1994,muller1995,anguita1996},
+the new millennium brought a DL breakthrough in form of cheap, multi-processor
+graphics cards or GPUs. GPUs are widely used for video games, a huge and competitive market
+that has driven down hardware prices.
+GPUs excel at the fast matrix and vector multiplications required not only for 
+convincing virtual realities but also for NN training, 
+where they can speed up learning by a factor of  50 and more.
+Some of the GPU-based FNN implementations (Sec.~\ref{2007}--\ref{2011}) have greatly contributed to recent successes in contests for pattern recognition (Sec.~\ref{2011}--\ref{2013}),
+image segmentation (Sec.~\ref{2012}),
+and object detection (Sec.~\ref{2012}--\ref{2013}).
+ 
+
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}

@@ -1,0 +1,250 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{Supervised NNs, Some Helped by Unsupervised NNs}
+\label{super}
+
+%The present section represents the bulk of this paper. 
+The main focus of current practical applications is on {\em Supervised Learning} (SL),
+which has dominated recent pattern recognition contests 
+(Sec.~\ref{2009}--\ref{dominant}).
+Several methods, however, use additional 
+{\em Unsupervised Learning} (UL) to facilitate SL (Sec.~\ref{1987},~\ref{1991b},~\ref{2006}).
+It does make sense to treat SL and UL in the same section:
+often gradient-based methods, such as BP (Sec.~\ref{bpsec}),
+are used to optimize objective functions of both UL and SL, 
+and the boundary 
+between SL and UL may blur, for example,
+when it comes to time series prediction and sequence
+classification, e.g., Sec.~\ref{1991b},~\ref{1994}.
+
+A historical timeline format will help to arrange 
+subsections on
+important inspirations and technical contributions
+(although such a subsection may span a time interval of many years).
+Sec.~\ref{1940} briefly mentions early, shallow NN models since the 1940s (and 1800s),
+Sec.~\ref{1962} additional early neurobiological inspiration relevant for modern Deep Learning (DL).
+Sec.~\ref{1965} is about GMDH networks  (since 1965), 
+to my knowledge the first (feedforward) DL systems.
+Sec.~\ref{1979} is about the relatively deep {\em Neocognitron} NN (1979)
+which is very similar to certain modern deep FNN architectures, as it
+combines convolutional NNs (CNNs), weight pattern replication, and subsampling mechanisms.
+Sec.~\ref{1970} uses the notation of Sec.~\ref{notation} to compactly 
+describe a central algorithm of DL, namely,
+{\em backpropagation} (BP) for 
+supervised weight-sharing FNNs and RNNs. It also summarizes
+ the history of BP 1960-1981 and beyond.
+Sec.~\ref{1990} describes problems encountered in the late 1980s with BP for deep NNs,
+and mentions several ideas from the previous millennium  to overcome them.
+Sec.~\ref{1987} discusses a first hierarchical stack (1987) of coupled UL-based Autoencoders (AEs)---this concept
+resurfaced in the
+new millennium (Sec.~\ref{2006}). 
+Sec.~\ref{1989} is about applying BP to CNNs (1989), which is important for today's DL applications.
+Sec.~\ref{1991a} explains BP's {\em Fundamental DL Problem} (of vanishing/exploding gradients)
+discovered in 1991.
+Sec.~\ref{1991b} explains how a deep RNN stack of 1991 (the {\em History Compressor}) pre-trained by UL helped to solve previously unlearnable DL benchmarks 
+requiring {\em Credit Assignment Paths} (CAPs, Sec.~\ref{caps}) of depth 1000 and more.
+Sec.~\ref{1999} discusses a particular {\em winner-take-all} (WTA) method called {\em Max-Pooling} (MP, 1992)  widely used in today's deep FNNs.
+Sec.~\ref{1994} mentions a first important contest won by SL NNs in 1994.
+Sec.~\ref{1997} describes a purely supervised DL RNN ({\em Long Short-Term Memory}, LSTM, 1995) for problems of depth 1000 and more.
+Sec.~\ref{2003} mentions an early contest of 2003 
+won by an ensemble of shallow FNNs, as well as
+good pattern recognition results with CNNs and deep FNNs and LSTM RNNs (2003). 
+Sec.~\ref{2006} is mostly about {\em Deep Belief Networks} (DBNs, 2006) and related stacks of {\em  Autoencoders} (AEs, Sec.~\ref{1987}), both pre-trained by UL to facilitate subsequent BP-based SL (compare Sec.~\ref{timelags},~\ref{1991b}). 
+Sec.~\ref{2007} mentions the first SL-based  GPU-CNNs (2006),  BP-trained MPCNNs (2007),
+and LSTM stacks (2007).
+Sec.~\ref{2009}--\ref{2013} focus on official competitions with secret test sets 
+won by (mostly purely supervised) deep NNs since 2009,
+in sequence recognition, image classification, image segmentation, and object detection.
+Many RNN results depended on LSTM (Sec.~\ref{1997});
+many FNN results depended on GPU-based FNN code developed since 2004 (Sec.~\ref{2007},~\ref{2009},~\ref{2010},~\ref{2011}),
+in particular, GPU-MPCNNs  (Sec.~\ref{2011}). 
+Sec.~\ref{tricks} mentions
+recent tricks for improving DL in NNs, many of them closely
+related to earlier tricks from the previous millennium (e.g., Sec.~\ref{betterbp},~\ref{mdlnn}).
+Sec.~\ref{bnn} discusses how artificial NNs can  help to understand biological NNs;
+Sec.~\ref{spiking} addresses the possibility of DL in NNs with spiking neurons.
+ 
+
+
+
+
+
+\subsection{Early NNs Since the 1940s (and the 1800s)}
+\label{1940}
+
+Early NN architectures~\citep{mcculloch:43} did not learn.
+The first ideas about UL were published a few years later~\citep{Hebb:49}.
+The following decades brought simple NNs trained by SL~\citep[e.g.,][]{rosenblatt1958,Rosenblatt:62,adaline62,Narendra:74}
+and UL~\citep[e.g.,][]{Grossberg69a,kohonen1972,malsburg1973,WillshawMalsburg:76},
+as well as closely related associative memories~\citep[e.g.,][]{Palm:80,Hopfield:82}.
+
+In a sense NNs have been around even longer, since
+early supervised NNs  were essentially variants of 
+linear regression methods going back at least to the early 1800s~\citep[e.g.,][]{legendre1805,gauss1809,gauss1821}; Gauss also refers to his work of 1795.
+Early NNs had a maximal CAP depth of 1 (Sec.~\ref{caps}).
+
+
+%NN research started in the 1940s~\citep[e.g.,][]{mcculloch:43,Hebb:49}; compare also later work on learning NNs~\citep{rosenblatt1958,Rosenblatt:62,adaline62,Grossberg69a,kohonen1972,malsburg1973,Narendra:74,WillshawMalsburg:76,Palm:80,Hopfield:82}. 
+
+\subsection{Around 1960: Visual Cortex Provides Inspiration for DL (Sec.~\ref{1979},~\ref{1999})}
+\label{1962}
+
+Simple cells and complex cells were found in the cat's 
+visual cortex~\citep[e.g.,][]{Hubel:62,wiesel:1959}.
+These cells fire in response to certain properties of visual sensory inputs, 
+such as the orientation of edges. Complex cells exhibit more spatial invariance than simple cells.
+This  inspired later deep NN architectures 
+(Sec.~\ref{1979},~\ref{1999}) used in certain modern award-winning Deep Learners (Sec.~\ref{2011}--\ref{2013}).
+
+
+
+\subsection{1965: Deep Networks Based on the Group Method of Data Handling}
+\label{1965}
+
+Networks trained by the {\em Group Method of Data Handling} (GMDH)~\citep{ivakhnenko1965,ivakhnenko1967,ivakhnenko1968,ivakhnenko1971} 
+were perhaps the first DL systems of
+the {\em Feedforward Multilayer Perceptron} type,
+although there was earlier work on NNs with a single hidden layer~\citep[e.g.,][]{joseph1961,viglione1970}.
+The units of GMDH nets may have polynomial activation functions implementing 
+{\em Kol\-mo\-go\-rov-Gabor polynomials} (more general than other widely used NN activation functions, Sec.~\ref{notation}).
+Given a training set, layers are incrementally grown and trained by regression analysis ~\citep[e.g.,][]{legendre1805,gauss1809,gauss1821} (Sec.~\ref{1940}), 
+then pruned with the help of a
+separate {\em validation set} (using today's terminology), where
+{\em Decision Regularisation} is used to weed out 
+superfluous units (compare Sec.~\ref{mdlnn}). The numbers of layers and units per layer can be learned in
+problem-dependent fashion.
+To my knowledge, this was the first example of open-ended, hierarchical 
+representation learning  in NNs (Sec.~\ref{hie}).
+A paper of 1971 already described a deep GMDH network with 8 layers
+\citep{ivakhnenko1971}.
+There have been numerous applications of GMDH-style nets, e.g.~\citep{ikeda1976,farlow1984,madala1994,ivakhnenko1995,kondo1998,kordik2003,witczak2006,kondo2008}. 
+
+
+\subsection{1979:  Convolution $+$ Weight Replication $+$ Subsampling (Neocognitron)}
+\label{1979}
+
+Apart from deep GMDH networks (Sec.~\ref{1965}),
+the {\em Neocognitron}~\citep{Fukushima:1979neocognitron,fukushima:1980,Fukushima:2013}
+was perhaps the first artificial NN that deserved the attribute {\em deep}, and the first 
+to incorporate the  neurophysiological insights of Sec.~\ref{1962}. 
+It introduced {\em convolutional NNs} (today often called CNNs or convnets), where the
+(typically rectangular) receptive field of a {\em convolutional unit} with given weight vector (a {\em filter})
+is shifted step by step across a 2-dimensional array of input values, such as the pixels of an image (usually there are several such filters). 
+The resulting 2D array of subsequent activation events of this unit can then provide inputs to higher-level units, and so on.
+Due to massive {\em weight replication} (Sec.~\ref{notation}),  
+relatively few parameters (Sec.~\ref{mdl}) 
+may be necessary to describe the behavior of such a {\em convolutional layer}.
+
+{\em Subsampling} or {\em downsampling} layers consist of units whose fixed-weight connections originate from physical neighbours in the convolutional layers below. 
+Subsampling units become active if at least one of their inputs is active;
+their responses are insensitive to certain small image shifts (compare Sec.~\ref{1962}).
+
+
+%{\em Competition layers} have WTA subsets whose maximally active units are the only ones to adopt non-zero activation values. They essentially ``downsample" the  competition layer's input. This helps to  create units whose responses are insensitive to small image shifts (compare Sec.~\ref{1962}).
+
+The Neocognitron is
+very similar to the architecture of modern, contest-winning, purely {\em  supervised}, 
+feedforward, gradient-based Deep Learners with alternating convolutional and downsampling layers
+(e.g., Sec.~\ref{2011}--\ref{2013}).
+Fukushima, however, did not set the weights by supervised
+backpropagation (Sec.~\ref{1970},~\ref{1989}),
+but by local, WTA-based
+{\em un}supervised learning rules~\citep[e.g.,][]{Fukushima:2013b}, or by pre-wiring. 
+In that sense he did not care for the  
+DL problem (Sec.~\ref{1991a}), 
+although his architecture was comparatively deep indeed. For downsampling purposes
+he used {\em  Spatial Averaging}~\citep{fukushima:1980,Fukushima:2011} instead of {\em Max-Pooling} (MP, Sec.~\ref{1999}),
+currently a particularly convenient and popular WTA mechanism. 
+Today's DL combinations of CNNs and MP and BP also profit a lot from
+later work (e.g., Sec.~\ref{1989},~\ref{2007},~\ref{2007},~\ref{2011}).
+
+
+\subsection{1960-1981 and Beyond: Development of Backpropagation (BP) for NNs}
+%\subsection{1970 $\pm$ a Decade or so: Backpropagation (BP)}
+\label{1970}
+The minimisation of  
+errors through {\em gradient descent}~\citep{hadamard1908memoire} in
+the parameter space of complex, 
+nonlinear, differentiable~\citep{leibniz1684}, multi-stage, NN-related systems has been discussed 
+at least since the early 1960s~\citep[e.g.,][]{Kelley:1960,bryson:1961,BRYSON-DENHAM-61A,PONTRYAGIN61A,dreyfus:1962,Wilkinson:1965,Amari:1967:TAP,bryson1969applied,director:1969},
+initially within the framework of Euler-LaGrange equations in the {\em Calculus of Variations}~\citep[e.g.,][]{Euler:1744}.
+
+{\em Steepest descent} in the weight space of 
+such systems can be performed~\citep{bryson:1961,Kelley:1960,bryson1969applied} 
+by iterating the chain rule~\citep{leibniz:1676,de1716analyse} 
+\`{a} la {\em Dynamic Programming} (DP)~\citep{Bellman:1957}.
+A simplified derivation of this backpropagation method uses the chain rule only~\citep{dreyfus:1962}.
+
+The systems of the 1960s were already efficient in the DP sense.
+%their derivative calculation was not more expensive than  the forward computation of the system's evolution (Sec.~\ref{notation}).
+However, they backpropagated derivative information through
+standard Jacobian matrix calculations from one ``layer" to the previous one,
+without explicitly addressing either direct links across several layers or potential additional efficiency gains due to network sparsity 
+(but perhaps such enhancements seemed obvious to the authors).
+Given all the prior work on learning in multilayer NN-like systems (see also Sec.~\ref{1965}
+on deep nonlinear nets since 1965),
+it seems surprising in hindsight that a book~\citep{MinskyPapert:69} 
+on the limitations of simple linear 
+perceptrons with a single layer (Sec.~\ref{1940})
+discouraged some researchers from further studying NNs.
+
+
+Explicit, efficient error backpropagation (BP) in arbitrary, discrete, possibly sparsely connected, 
+NN-like networks apparently was first described 
+ in a 1970 master's thesis~\citep{Linnainmaa:1970,Linnainmaa:1976}, albeit without reference to NNs.
+BP is also known as the reverse mode of automatic differentiation~\citep{Griewank:2012}, 
+where the costs of forward activation spreading essentially equal the costs of backward 
+derivative calculation. 
+See early FORTRAN code~\citep{Linnainmaa:1970} and closely related work~\citep{ostrovskii:1971}.
+
+Efficient BP was soon explicitly used to minimize cost functions by
+adapting control parameters (weights)~\citep{dreyfus:1973}.
+Compare some preliminary, NN-specific discussion~\citep[section 5.5.1]{Werbos:74}, 
+a method for multilayer threshold NNs~\citep{bobrowski78},
+and a computer program for automatically deriving and implementing BP 
+for given differentiable systems~\citep{SPEELPENNING80A}.
+
+
+To my knowledge, the first NN-specific application of
+efficient BP as above was described in 1981~\citep{Werbos:81sensitivity,werbos2006backwards}.
+Related work was published several  years later~\citep{Parker:85,LeCun:85,lecun-88}.
+A paper of 1986 significantly contributed to the popularisation of BP for NNs~\citep{Rumelhart:86}, experimentally demonstrating the emergence of useful 
+internal representations in hidden layers. 
+See generalisations for sequence-processing 
+recurrent NNs~\citep[e.g.,][]{Williams:89,RobinsonFallside:87tr,Werbos:88gasmarket,WilliamsZipser:88,WilliamsZipser:89nc,WilliamsZipser:89cs,Rohwer:89,Pearlmutter:89,Gherrity:89,WilliamsPeng:90,Schmidhuber:92ncn3,Pearlmutter:95,baldi95,kremer2001,atiya2000}, also for equilibrium RNNs~\citep{Almeida:87,Pineda:87} with stationary inputs.
+%See also {\em natural gradients}~\citep{amari1998natural}. 
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}

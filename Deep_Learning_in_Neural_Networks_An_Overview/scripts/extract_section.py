@@ -13,7 +13,7 @@ section = re.findall(r'\\section(.*?)%\\newpage', tex, re.S)
 #  print(section[0])
 for section_index in range(len(section)):
     if section_index >= 0:
-        section_tex = tex_header + section[section_index] + tex_tail
+        section_tex = tex_header + '\\section' + section[section_index] + tex_tail
         chapter_index = section_index + 1
         chapter_dir = 'Chapter' + str(chapter_index)
         #  print(chapter_dir)

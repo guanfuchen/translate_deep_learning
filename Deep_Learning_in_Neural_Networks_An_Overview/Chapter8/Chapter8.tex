@@ -1,0 +1,47 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage{CJKutf8}
+%\usepackage[UTF8, heading = false, scheme = plain]{ctex}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{breakcites}
+%\usepackage{authorindex}
+\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,url}
+%\usepackage{hyperref}
+%\usepackage[hyphenbreaks]{breakurl}
+\usepackage[breaklinks]{hyperref}
+%\usepackage{algorithm,algorithmic,a4wide,amssymb,natbib,multicol,enumitem,hyperref,url}
+% natbib link joining; somewhat breaks \cite, \citet, but is ok for \citep
+ \usepackage[top=3.7cm, bottom=3.7cm, left=3.7cm, right=3.7cm]{geometry} 
+\makeatletter
+\renewcommand\hyper@natlinkbreak[2]{#1}
+\makeatother
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+
+\section{Acknowledgments}
+\label{ack}
+
+
+Since 16 April 2014, drafts of this paper have undergone massive open online peer review through public mailing lists including 
+{\em connectionists\-@cs.cmu.edu, ml-news\-@googlegroups.com, comp-neuro\-@neuro\-inf.org, genetic\_pro\-gramming\-@yahoo\-groups.com, rl-list\-@googlegroups.com, image\-world\-@diku.dk, Google+ machine learning forum.} 
+Thanks to numerous NN / DL experts for valuable comments. Thanks to SNF, DFG, and the European Commission for partially funding my DL research group in the past quarter-century.
+The contents of this paper may be used for educational and non-commercial purposes, including articles for Wikipedia and similar sites.
+
+% \end{sloppypar}
+
+\bibliography{deep}
+\bibliographystyle{apalike}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{bib,bib_extra}
+%\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\printauthorindex
+\end{CJK*}
+\end{document}
