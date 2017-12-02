@@ -38,6 +38,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Both {&lt;u0&gt; feedforward} (acyclic) NNs (FNNs) and {&lt;u1&gt; recurrent} (cyclic) NNs (RNNs) have won contests (Sec.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T061025Z" creationid="cgf" creationdate="20171202T061025Z">
+        <seg> {&lt;u0&gt; 前向} (非周期性) NNs (FNNs) 和 {&lt;u1&gt; 循环} (周期性) NNs (RNNs)也赢得了许多比赛 (Sec.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>DL became practically feasible to some extent through the help of {&lt;u6&gt; Unsupervised Learning} (UL), e.g., Sec. &lt;n6&gt; (1991), Sec. &lt;n7&gt; (2006).</seg>
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171202T060126Z" creationid="cgf" creationdate="20171202T060126Z">
@@ -54,10 +62,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Deep NNs also have become relevant for the more general field of {&lt;u7&gt; Reinforcement Learning} (RL) where there is no supervising teacher (Sec. &lt;n14&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T060905Z" creationid="cgf" creationdate="20171202T060905Z">
+        <seg>深度NNs也已经在许多通用的{&lt;u7&gt; 增强学习} (RL)领域中获得了广泛的应用(Sec. &lt;n14&gt;)。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Depending on the problem and how the neurons are connected, such behavior may require long causal chains of computational stages (Sec. &lt;n1&gt;), where each stage transforms (often in a non-linear way) the aggregate activation of the network.</seg>
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052516Z" creationid="cgf" creationdate="20171202T052352Z">
         <seg>按照问题不同以及神经元如何连接，这种行为也许要求长期的随意计算情况 (Sec. &lt;n1&gt;), 在那里每一种情况都会转换 (经常是以非线性的方式)网络的激活。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In a sense, RNNs are the deepest of all NNs (Sec. &lt;n6&gt;)---they are general computers</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T061122Z" creationid="cgf" creationdate="20171202T061122Z">
+        <seg>某种程度上，RNNs是所有网络中最深的网络(Sec. &lt;n6&gt;)---它们是通用的计算机</seg>
       </tuv>
     </tu>
     <tu>
@@ -142,6 +166,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Unlike traditional methods for automatic sequential program synthesis &lt;u1&gt;[e.g.,][]{waldinger69,balzer1985,soloway1986,Deville:94}, RNNs can learn programs that mix sequential and parallel information processing in a natural and efficient way, exploiting the massive parallelism viewed as crucial for sustaining the rapid decline of computation cost observed over the past 75 years.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T061352Z" creationid="cgf" creationdate="20171202T061252Z">
+        <seg>不像传统的自动顺序程序合成方法 &lt;u1&gt;[例如.,][]{waldinger69,balzer1985,soloway1986,Deville:94}, RNN以自然而有效的方式混合顺序和并行信息处理学习程序, exploiting the massive parallelism viewed as crucial for sustaining the rapid decline of computation cost observed over the past 75 years.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>What changes to them improve performance?</seg>
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132347Z" creationid="cgf" creationdate="20171201T132347Z">
@@ -154,6 +186,14 @@
       </tuv>
       <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132029Z" creationid="cgf" creationdate="20171201T131730Z">
         <seg>学习系统的哪些可修改的组件负责其成功或失败？</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>more powerful than FNNs, and can in principle create and process memories of arbitrary sequences of input patterns &lt;u0&gt;[e.g.,][]{siegelmann91turing,schmidhuber1990}.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T061229Z" creationid="cgf" creationdate="20171202T061229Z">
+        <seg>但是比FNNs更加强大，并原则上可以创建和处理任意输入模式序列的记忆&lt;u0&gt;[例如.,][]{siegelmann91turing,schmidhuber1990}.</seg>
       </tuv>
     </tu>
     <tu>
