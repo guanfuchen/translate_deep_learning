@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx11.dtd">
+<tmx version="1.1">
+  <header creationtool="OmegaT" o-tmf="OmegaT TMX" adminlang="EN-US" datatype="plaintext" creationtoolversion="OmegaT-3.6.0" segtype="sentence" srclang="EN-US"/>
+  <body>
+<!-- Default translations -->
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(Sec. &lt;n0&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T135047Z" creationid="cgf" creationdate="20171201T135047Z">
+        <seg>(Sec. &lt;n0&gt;)。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A standard neural network (NN) consists of many simple, connected processors called neurons, each producing a sequence of real-valued activations.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T134959Z" creationid="cgf" creationdate="20171201T134959Z">
+        <seg>一个标准的神经网络由许多简单被称为神经元的连接处理器组合，每一个生成一个真是值激活的序列。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An efficient gradient descent method for teacher-based {&lt;u2&gt; Supervised Learning} (SL) in discrete, differentiable networks of arbitrary depth called {&lt;u3&gt; backpropagation} (BP) was developed in the 1960s and 1970s, and applied to NNs in 1981 (Sec. &lt;n3&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T053345Z" creationid="cgf" creationdate="20171202T053345Z">
+        <seg>一种高效地基于训练的{&lt;u2&gt; 监督学习} (SL)梯度下降方法, 被称为 {&lt;u3&gt; 反向传播} (BP)的随机深度的不同网络在1960年和1970年就被提出, 并且在1981年应用到了NN (Sec. &lt;n3&gt;)。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>BP-based training of {&lt;u4&gt; deep} NNs with {&lt;u5&gt; many} layers, however, had been found to be difficult in practice by the late 1980s (Sec. &lt;n4&gt;), and had become an explicit research subject by the early 1990s (Sec. &lt;n5&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T053643Z" creationid="cgf" creationdate="20171202T053434Z">
+        <seg>然而，基于BP训练具有{&lt;u5&gt; 多成网络层} 的{&lt;u4&gt; 深度} NNs, 已经在1980年就被发现在实际过程中难以应用(Sec. &lt;n4&gt;), 早在1990年这个问题就已经是研究热点(Sec. &lt;n5&gt;)。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Deep Learning is about accurately assigning credit across {&lt;u3&gt; many} such stages.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052723Z" creationid="cgf" creationdate="20171202T052721Z">
+        <seg>深度学习是关于精确地在 {&lt;u3&gt; 多种} 情况下赋值credit。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Depending on the problem and how the neurons are connected, such behavior may require long causal chains of computational stages (Sec. &lt;n1&gt;), where each stage transforms (often in a non-linear way) the aggregate activation of the network.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052516Z" creationid="cgf" creationdate="20171202T052352Z">
+        <seg>按照问题不同以及神经元如何连接，这种行为也许要求长期的随意计算情况 (Sec. &lt;n1&gt;), 在那里每一种情况都会转换 (经常是以非线性的方式)网络的激活。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Input neurons get activated through sensors perceiving the environment, other neurons get activated through weighted connections from previously active neurons (details in Sec. &lt;n0&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T135223Z" creationid="cgf" creationdate="20171201T135211Z">
+        <seg>输入神经元通过感知环境的传感器被激活，其他神经元通过连接先前激活神经元的权重被激活 (细节见 Sec. &lt;n0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Introduction to Deep Learning (DL) in Neural Networks (NNs)</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T131540Z" creationid="cgf" creationdate="20171201T131540Z">
+        <seg>介绍神经网络中的深度学习</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Models with several successive nonlinear layers of neurons date back at least to the 1960s (Sec. &lt;n1&gt;) and 1970s (Sec. &lt;n2&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T053101Z" creationid="cgf" creationdate="20171202T053101Z">
+        <seg>具有几种前向非线性层的神经元早在1960年(Sec. &lt;n1&gt;) 和1970(Sec. &lt;n2&gt;)年就已经提出了。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some neurons may influence the environment by triggering actions.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052037Z" creationid="cgf" creationdate="20171202T052037Z">
+        <seg>有一些神经元也许会通过触发动作影响环境。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The present survey, however, will focus on the narrower, but now commercially important, subfield of {&lt;u0&gt; Deep Learning} (DL) in {&lt;u1&gt; Artificial Neural Networks} (NNs).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T135423Z" creationid="cgf" creationdate="20171201T134604Z">
+        <seg>本篇综述相反将关注更窄但是有重大商业应用的{&lt;u1&gt; 人工神经网络} (NNs)中的一个子领域{&lt;u0&gt; 深度学习} (DL) 。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There are general credit assignment methods for {&lt;u1&gt; universal problem solvers} that are time-optimal in various theoretical senses</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132947Z" creationid="cgf" creationdate="20171201T132842Z">
+        <seg>有通用的credit assignment methods来处理{&lt;u1&gt; universal problem solvers}，这些方法在各种理论意义上是时间最优的</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This has been called the {&lt;u0&gt; fundamental credit assignment problem} &lt;u2&gt;{Minsky:63}.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132620Z" creationid="cgf" creationdate="20171201T132620Z">
+        <seg>这被称为 {&lt;u0&gt; fundamental credit assignment problem} &lt;u2&gt;{Minsky:63}.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>What changes to them improve performance?</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132347Z" creationid="cgf" creationdate="20171201T132347Z">
+        <seg>这些组件如何改变能够提升性能？</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Which modifiable components of a learning system are responsible for its success or failure?</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171201T132029Z" creationid="cgf" creationdate="20171201T131730Z">
+        <seg>学习系统的哪些可修改的组件负责其成功或失败？</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>{&lt;u0&gt; Learning} or {&lt;u1&gt; credit assignment} is about finding weights that make the NN exhibit {&lt;u2&gt; desired} behavior, such as driving a car.</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052220Z" creationid="cgf" creationdate="20171202T052220Z">
+        <seg>{&lt;u0&gt; 学习} or {&lt;u1&gt; credit assignment}是关于发现权重来使得NN具备{&lt;u2&gt; 期望的} 行为, 比如自动驾驶。</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>{&lt;u0&gt; Shallow} NN-like models with {&lt;u1&gt; few} such stages have been around for many decades if not centuries (Sec. &lt;n0&gt;).</seg>
+      </tuv>
+      <tuv lang="EN-GB" changeid="cgf" changedate="20171202T052918Z" creationid="cgf" creationdate="20171202T052743Z">
+        <seg>考虑了{&lt;u1&gt; 许多}这种情况的{&lt;u0&gt; 浅层} NN-like模型已经研究了许多年了 (Sec. &lt;n0&gt;)。</seg>
+      </tuv>
+    </tu>
+<!-- Alternative translations -->
+  </body>
+</tmx>

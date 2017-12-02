@@ -1,6 +1,5 @@
 *.pdf
 *.orig
-omegat/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
